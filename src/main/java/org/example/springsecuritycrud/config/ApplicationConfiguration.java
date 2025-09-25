@@ -1,6 +1,6 @@
 package org.example.springsecuritycrud.config;
 
-import org.example.springsecuritycrud.repository.UserRepository;
+import org.example.springsecuritycrud.infrastruture.persistence.adapter.IUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +16,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationConfiguration {
 
     @Autowired
-    private final UserRepository userRepository;
+    private final IUserRepositoryImpl IUserRepositoryImpl;
 
-    public ApplicationConfiguration(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public ApplicationConfiguration(IUserRepositoryImpl IUserRepositoryImpl) {
+        this.IUserRepositoryImpl = IUserRepositoryImpl;
     }
 
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
+        return username -> IUserRepositoryImpl.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
