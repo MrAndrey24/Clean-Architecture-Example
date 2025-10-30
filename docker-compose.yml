@@ -6,29 +6,29 @@ services:
     ports:
       - 8080:8080
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/lab
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lab
       SPRING_DATASOURCE_USERNAME: andrey
       SPRING_DATASOURCE_PASSWORD: password123
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.mariadb.jdbc.Driver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.jdbc.Driver
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MariaDBDialect
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
       SECURITY_JWT_SECRET_KEY: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
       SECURITY_JWT_EXPIRATION_TIME: 3600000
     depends_on:
       - db
 
   db:
-    image: mariadb:latest
+    image: postgres:latest
     ports:
-      - 3306:3306
+      - 5432:5432
     environment:
-      MARIADB_ROOT_PASSWORD: password123
-      MARIADB_DATABASE: lab
-      MARIADB_USER: andrey
-      MARIADB_PASSWORD: password123
+      POSTGRES_ROOT_PASSWORD: password123
+      POSTGRES_DB: lab
+      POSTGRES_USER: andrey
+      POSTGRES_PASSWORD: password123
     volumes:
-      - db_data:/var/lib/mariadb
+      - db_data:/var/lib/clean_architecture_db
 
 volumes:
   db_data:
